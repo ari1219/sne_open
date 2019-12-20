@@ -3,12 +3,17 @@
 implementation of "Embedding of Signed Networks Forcusiong on Both Structure and Relation" (CompleNet 2020)
 
 ## How to run
-### clone this file
+please clone this repository
 ```
-git clone 
+git clone https://github.com/ari1219/sne_open.git
 ```
 
-### train embedding
+please type below command in "sne_open" folder
+```
+mkdir embedding
+mkdir log
+```
+
 Plese type below command in "sne_open" folder
 ```
 python src/train.py <data/FILE_NAME> <NUM_OF_NODES>
