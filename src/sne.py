@@ -17,9 +17,9 @@ class Model:
                  lr=0.015, # learning rate
                  use_balance=True, # for relation loss (default True)
                  undersampling=False, # sampling positive edges use for each epoch (default False)
-                 sampling_rate=3, # sampling rate of positive edges ()
-                 k=10, # number of negative sampling 
-                 alpha=0.5, # alpha 
+                 sampling_rate=3, # sampling rate of positive edges
+                 k=10, # number of negative sampling
+                 alpha=0.5, # alpha
                  batch_size=1000, # batch size
                  lam=1e-5): # reguralization params
         self.n = n
@@ -69,7 +69,7 @@ class Model:
         self.w_neg = tf.Variable(tf.random_uniform([self.dim, self.dim], minval=-_bound, maxval=_bound), dtype=tf.float32)
         self.b_1 = tf.Variable(tf.zeros([self.dim]), dtype=tf.float32)
         self.f = tf.where(self.r==1, tf.matmul(self.u_vec, self.w_pos), tf.matmul(self.u_vec, self.w_neg))+ self.b_1
-        self.b = tf.Variable(tf.zeros([self.n]), dtype=tf.float32)
+        self.b = tf.Variable(tf.zeros([self.n]), dtype=tf.float32, trainable=False)
         self.loss_skip = tf.reduce_mean(tf.nn.sampled_softmax_loss(
                 self.v_emb,
                 self.b,
@@ -94,6 +94,7 @@ class Model:
         else:
             self.loss_rel = - tf.reduce_mean(self.i*tf.log(self.reg_g) + (1-self.i)*tf.log(1-self.reg_g))
 
+    # build reguralization loss
     def build_loss_reg(self):
         self.loss_reg = \
         tf.nn.l2_loss(self.u_emb)\
@@ -124,7 +125,6 @@ class Model:
                 feed_dict={self.u:u, self.v:v, self.r:r, self.pos_rate:1., self.neg_rate:1.}
             feed_dict={self.u:u, self.v:v, self.r:r, self.pos_rate:pos_rate, self.neg_rate:neg_rate}
             sess.run([self.train], feed_dict=feed_dict)
-
 
     def sample_iterater(self):
         if self.undersampling:
