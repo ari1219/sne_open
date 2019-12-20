@@ -2,20 +2,23 @@
 
 implementation of "Embedding of Signed Networks Forcusiong on Both Structure and Relation" (CompleNet 2020)
 
-## How to run
-please clone this repository
-```
-git clone https://github.com/ari1219/sne_open.git
-```
-
-please type below command in "sne_open" folder
+## Demo
+In "sne_open" folder, please type below command
 ```
 mkdir embedding
 mkdir log
+python src/train.py slashdot1
+python src/relation_prediction.py slashdot1
+python src/link_prediction.py slashdot1
 ```
 
-Plese type below command in "sne_open" folder
-```
-python src/train.py <data/FILE_NAME> <NUM_OF_NODES>
-```
+## program
 
+## Requirement
+My emvironment is blow
+```
+tensorflow=1.14.0
+networkx=2.2
+scikit-learn=0.20.3
+numpy=1.16.2
+```
