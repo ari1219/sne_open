@@ -69,7 +69,7 @@ class Model:
         self.w_neg = tf.Variable(tf.random_uniform([self.dim, self.dim], minval=-_bound, maxval=_bound), dtype=tf.float32)
         self.b_1 = tf.Variable(tf.zeros([self.dim]), dtype=tf.float32)
         self.f = tf.where(self.r==1, tf.matmul(self.u_vec, self.w_pos), tf.matmul(self.u_vec, self.w_neg))+ self.b_1
-        self.b = tf.Variable(tf.zeros([self.n]), dtype=tf.float32, trainable=False)
+        self.b = tf.Variable(tf.zeros([self.n]), dtype=tf.float32)
         self.loss_skip = tf.reduce_mean(tf.nn.sampled_softmax_loss(
                 self.v_emb,
                 self.b,
